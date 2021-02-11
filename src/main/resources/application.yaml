@@ -1,0 +1,21 @@
+
+mail:
+  hostname: smtp@gmail.com
+  port: 587
+  from: mailer@gmail.com
+
+
+logging:
+  level:
+    root: INFO
+    org.springframework.boot: INFO
+
+
+spring:
+  application:
+    name: Exercise 2
+  profiles:
+    active: dev
+
+server:
+  port: 8080
