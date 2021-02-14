@@ -11,13 +11,31 @@ import java.util.List;
 public class TaskService {
 
     List<Task> taskList = new ArrayList<Task>(Arrays.asList(
-            new Task(1,"Clean the house", "02/20/2021"),
-            new Task(1,"Go to te grocery", "02/21/2021"),
-            new Task(1,"Exercise", "02/22/2021")
     ));
 
     public List<Task> getallTask() {
         return taskList;
+    }
+
+    public Boolean addTask(Task task) {
+        boolean isTaskIdExist = false;
+        for (Task item: taskList) {
+            if (item.getTaskId() == task.getTaskId()) {
+                isTaskIdExist = true;
+                task.setTaskIdExist(true);
+                System.out.println("Exist");
+            }
+        }
+        if (isTaskIdExist == false) {
+            task.setTaskIdExist(false);
+            taskList.add(new Task(task.getTaskId(), task.getDescription(), task.getDate()));
+            System.out.println("Not Exist");
+        }
+        return isTaskIdExist;
+    }
+
+    public void removeTask(long taskId) {
+       taskList.removeIf( item -> item.getTaskId() == taskId);
     }
 
 }

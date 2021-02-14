@@ -5,6 +5,7 @@ public class Task {
     private long taskId;
     private String description;
     private String date;
+    private boolean isTaskIdExist;
 
     public Task(){}
 
@@ -36,5 +37,22 @@ public class Task {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public boolean isTaskIdExist() {
+        return isTaskIdExist;
+    }
+
+    public void setTaskIdExist(boolean taskIdExist) {
+        isTaskIdExist = taskIdExist;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 }

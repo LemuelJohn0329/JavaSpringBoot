@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/2.1.4/dist/jquery.min.js}"></script>
+    <title>To Do Application</title>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h2 class="display-4">Add Task</h2>
+</div>
+<div class="container">
+    <!--<h6 style="color: red" th:if="${task.taskIdExist}">Task ID is already Exist.</h6>-->
+    <form th:action="@{/addTask}" method="post" th:object="${task}">
+
+        <div class="row">
+            <div class="form-group col-lg-5">
+                <label>Task ID</label>
+                <input type="text" class="form-control input-normal"  placeholder="Enter task ID" th:field="${task.taskId}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-5">
+                <label>Description</label>
+                <input type="text" class="form-control input-normal" placeholder="Enter description" th:field="${task.description}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-lg-5">
+                <label>Date</label>
+                <input type="text" class="form-control input-normal" placeholder="Enter date" th:field="${task.date}"/>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <button type="submit" class="btn btn-success">Save</button> &nbsp; &nbsp;
+                <button type="button" class="btn btn-danger" onclick="location.href='/'">Back</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+</body>
+</html>

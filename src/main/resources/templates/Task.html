@@ -1,11 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Task</title>
-
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/2.1.4/dist/jquery.min.js}"></script>
+    <title>To Do Application</title>
 </head>
 <body>
-        <h1>Hello</h1>
+<div class="jumbotron text-center">
+    <h2 class="display-4">To Do Application</h2>
+</div>
+    <div class="container">
+    </div>
+    <div class="container">
+            <table class="table table-bordered">
+                <caption>List of Task/s</caption>
+                <thead class="thead-dark">
+                <tr>
+                    <th>Task ID</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th colspan="2" size="50%">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="result:${task}">
+                    <td th:text="${result.taskId}"></td>
+                    <td th:text="${result.description}"></td>
+                    <td th:text="${result.date}"></td>
+                    <td>
+                        <form method="post" th:action="@{/edit}">
+                            <button type="submit" class="btn btn-info">Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" th:action="@{/delete(taskId=${result.taskId})}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form> &nbsp;
+                    </td>
+                </tr>
+                </tbody>
+                <tbody th:if="${#lists.isEmpty(task)}">
+                <tr>
+                    <td class="text-center" colspan="4">No task/s.</td>
+                </tr>
+                </tbody>
+            </table>
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <button type="submit" class="btn btn-success" onclick="location.href='/add'">Add</button>&nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+        });
+
+
+    </script>
 </body>
 </html>
