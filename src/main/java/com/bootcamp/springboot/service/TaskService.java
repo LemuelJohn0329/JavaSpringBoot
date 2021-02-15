@@ -1,41 +1,32 @@
 package com.bootcamp.springboot.service;
 
 import com.bootcamp.springboot.model.Task;
+import com.bootcamp.springboot.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TaskService {
 
-    List<Task> taskList = new ArrayList<Task>(Arrays.asList(
-    ));
+    @Autowired
+    TaskRepository taskRepository;
 
-    public List<Task> getallTask() {
-        return taskList;
+
+    public List<Task> getTasks() {
+        return taskRepository.findAll();
     }
 
-    public Boolean addTask(Task task) {
-        boolean isTaskIdExist = false;
-        for (Task item: taskList) {
-            if (item.getTaskId() == task.getTaskId()) {
-                isTaskIdExist = true;
-                task.setTaskIdExist(true);
-                System.out.println("Exist");
-            }
-        }
-        if (isTaskIdExist == false) {
-            task.setTaskIdExist(false);
-            taskList.add(new Task(task.getTaskId(), task.getDescription(), task.getDate()));
-            System.out.println("Not Exist");
-        }
-        return isTaskIdExist;
+    public Task saveTask(Task task) {
+        return taskRepository.save(task);
     }
 
-    public void removeTask(long taskId) {
-       taskList.removeIf( item -> item.getTaskId() == taskId);
+    public void deleteTask(long id) {
+        taskRepository.deleteById(id);
+    }
+
+    public Task getTaskById(long id) {
+        return taskRepository.findById(id).get();
     }
 
 }
