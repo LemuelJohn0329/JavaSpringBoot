@@ -1,17 +1,12 @@
 package com.bootcamp.springboot.repository;
 
-
-import com.bootcamp.springboot.model.Task;
+import com.bootcamp.springboot.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface TaskRepository extends JpaRepository<Task, Long> {
+public interface UsersRepository extends JpaRepository<Users, Long> {
 
-        List<Task> findAll();
-
-
+    Users findByUsername(String username);
 
 }

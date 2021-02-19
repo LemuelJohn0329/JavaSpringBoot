@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css}" />
+    <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <script th:src="@{https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{https://cdn.dataTables.net/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
     <title>To Do Application</title>
 </head>
 <body>
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <h5>To Do Application</h5>
-    </nav>
+    <div class="container mb-3 mt-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <span class="navbar-brand mb-0 h1">To Do Application</span>
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <div class="container mb-3 mt-3">
         <table class="table table-striped table-bordered mydatatable" style="width: 100%">
             <thead>
@@ -29,19 +41,21 @@
                         <input type="hidden" id="taskIdHid" th:value="${result.taskId}">
                         <input type="hidden" id="txtDescriptionHid" th:value="${result.description}">
                         <input type="hidden" id="txtDateHid" th:value="${result.date}">
-                        <a class="edit"><button class="btn btn-info" data-toggle="modal" data-target="#UpdateModal">Update</button></a> &nbsp;
-                        <a th:href="@{/delete(taskId=${result.taskId})}"><button class="btn btn-danger" >Delete</button></a>
+                        <a class="edit"><button class="btn btn-outline-success show-modalUpdate" data-toggle="modal" data-target="#UpdateModal">Update</button></a> &nbsp;
+                        <a th:href="@{/delete(taskId=${result.taskId})}"><button class="btn btn-outline-danger">Delete</button></a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="container">
-        <button class="btn btn-success" data-toggle="modal" data-target="#AddModal">Create New</button>
+        <button class="btn btn-success show-modal" data-toggle="modal" data-target="#AddModal">Create New</button>
     </div>
 
     <!-- MODALS start here-->
     <!-- Add modal -->
+
+
     <div class = "modal fade" id = "AddModal" tabindex = "-1"
          role = "dialog" aria-labelledby =" exampleModalLabelAdd" aria-hidden = "true">
         <div class = "modal-dialog" role = "document">
@@ -53,17 +67,19 @@
                     </button>
                 </div>
                 <div class = "modal-body">
-                    <form th:action="@{/save}" method="post" th:object="${task}">
+                    <form th:action="@{/save}" method="post" th:object="${task}" class="was-validated">
                         <div class="row">
                             <div class="form-group col-lg-12">
-                                <label>Description</label>
-                                <input type="text" class="form-control input-normal" required="required" placeholder="Enter description" th:field="${task.description}"/>
+                                <label for="txtDescriptionAdd">Description</label>
+                                <input type="text" class="form-control input-normal" id="txtDescriptionAdd" required="required" placeholder="Enter description" th:field="${task.description}"/>
+                                <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-lg-5">
-                                <label>Date</label>
-                                <input type="text" class="form-control input-normal" required="required" placeholder="Enter date" th:field="${task.date}"/>
+                            <div class="form-group col-lg-6">
+                                <label for="txtDateAdd">Date</label>
+                                <input type="date" class="form-control input-normal" id="txtDateAdd" required="required" placeholder="Enter date" th:field="${task.date}"/>
+                                <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
                         <button type = "submit" class = "btn btn-success">Save</button>
@@ -72,6 +88,8 @@
             </div>
         </div>
     </div>
+
+
 
     <!-- Update modal -->
     <div class = "modal fade" id = "UpdateModal" tabindex = "-1"
@@ -85,18 +103,20 @@
                     </button>
                 </div>
                 <div class = "modal-body">
-                    <form th:action="@{/update}" method="post" th:object="${task}">
+                    <form th:action="@{/update}" method="post" th:object="${task}" class="was-validated">
                         <div class="row">
                             <div class="form-group col-lg-12">
-                                <label>Description</label>
+                                <label for="txtDescription">Description</label>
                                 <input type="hidden" id="taskId" th:field="${task.taskId}"/>
                                 <input type="text" class="form-control input-normal" placeholder="Enter description" id="txtDescription" required="required" th:field="${task.description}"/>
+                                <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-lg-5">
-                                <label>Date</label>
-                                <input type="text" class="form-control input-normal" placeholder="Enter date" id="txtDate" required="required" th:field="${task.date}"/>
+                            <div class="form-group col-lg-6">
+                                <label for="txtDate">Date</label>
+                                <input type="date" class="form-control input-normal" placeholder="Enter date" id="txtDate" required="required" th:field="${task.date}"/>
+                                <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
                         <button type = "submit" class = "btn btn-success">Update</button>
@@ -105,19 +125,63 @@
             </div>
         </div>
     </div>
+    <!-- Delete modal -->
+    <!--
+    <div class = "modal fade" id = "DeleteModal" tabindex = "-1"
+         role = "dialog" aria-labelledby =" exampleModalLabelUpdate" aria-hidden = "true">
+        <div class = "modal-dialog" role = "document">
+            <div class = "modal-content">
+                <div class = "modal-header">
+                    <h5 class = "modal-title" id = "DeleteModalLabel">Confirmation</h5>
+                    <button type = "button" class = "close" data-dismiss = "modal" aria-label = "Close">
+                        <span aria-hidden = "true">×</span>
+                    </button>
+                </div>
+                <div class = "modal-body">
+                        <input type="text" id="txtTaskId"/>
+                        <label class="text">Are you sure you want to delete?</label>
 
+                </div>
+                <div class="modal-footer">
+                   <button  class = "btn btn-success">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
     <!-- MODALS end here-->
 
-    <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
-    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-    <script th:src="@{https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js}"></script>
-    <script th:src="@{https://cdn.dataTables.net/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
-    <script>
+    <!-- Toast start -->
+    <!--
+    <div class="toast" data-autohide="true">
+        <div class="toast-header">
+            <strong class="mr-auto text-primary">Toast Header</strong>
+            <small class="text-muted">5 mins ago</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body">
+            Are you sure you want to delete?
+        </div>
+    </div>
+    </div>
+    -->
+    <!-- Toast end -->
+    <script type = "text/javascript">
+        <!--Get Task Id when the delete button was clicked -->
+
+        function GetTaskId(ID) {
+            console.log(ID);
+            $("#txtTaskId").val(ID);
+        }
+
         $(document).ready( function () {
 
             $('.mydatatable').DataTable();
 
+
+
+            /* Passing value to modal when the update button was clicked */
             $('table .edit').on('click', function () {
                 var taskId = $(this).parent().find('#taskIdHid').val();
                 var description = $(this).parent().find('#txtDescriptionHid').val();
@@ -128,8 +192,40 @@
                 $('#UpdateModal #txtDate').val(date);
                 console.log(description);
             });
+
+            /* Modal properties start */
+            $(".show-modal").click(function(){
+                $("#AddModal").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+
+            $("#AddModal").on("shown.bs.modal", function () {
+                $("#txtDescriptionAdd").trigger("focus");
+            });
+
+            $("#UpdateModal").on("shown.bs.modal", function () {
+                $("#txtDescription").trigger("focus");
+            });
+
+            $(".show-modalUpdate").click(function(){
+                $("#UpdateModal").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+
+            $(".modal").on("hidden.bs.modal", function () {
+                $("#txtDescriptionAdd").val("");
+                $("#txtDateAdd").val("");
+                $("#txtDescription").val("");
+                $("#txtDate").val("");
+            });
+            /* Modal properties end */
         });
 
     </script>
+
 </body>
 </html>

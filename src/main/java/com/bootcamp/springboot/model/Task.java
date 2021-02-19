@@ -1,17 +1,14 @@
 package com.bootcamp.springboot.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Task {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long taskId;
     private String description;
     private String date;
-    private boolean isTaskIdExist;
 
     public Task(){}
 
@@ -21,8 +18,7 @@ public class Task {
         this.date = date;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public long getTaskId() {
         return taskId;
     }
@@ -45,14 +41,6 @@ public class Task {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public boolean isTaskIdExist() {
-        return isTaskIdExist;
-    }
-
-    public void setTaskIdExist(boolean taskIdExist) {
-        isTaskIdExist = taskIdExist;
     }
 
     @Override
