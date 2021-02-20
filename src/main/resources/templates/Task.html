@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"/>
@@ -14,16 +14,33 @@
 <body>
     <div class="container mb-3 mt-3">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <span class="navbar-brand mb-0 h1">To Do Application</span>
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <span class="navbar-brand mb-0 h1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
+                  <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                  <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z"/>
+                </svg>
+                &nbsp; To Do Application</span>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Users List</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </nav>
     </div>
+    <div class="container">
+        <button class="btn btn-sm btn-outline-secondary show-modal" data-toggle="modal" data-target="#AddModal">Create New</button>
+    </div>
     <div class="container mb-3 mt-3">
-        <table class="table table-striped table-bordered mydatatable" style="width: 100%">
+        <table class="table table-bordered mydatatable" style="width: 100%">
             <thead>
                 <tr>
                     <td>Task #</td>
@@ -41,17 +58,13 @@
                         <input type="hidden" id="taskIdHid" th:value="${result.taskId}">
                         <input type="hidden" id="txtDescriptionHid" th:value="${result.description}">
                         <input type="hidden" id="txtDateHid" th:value="${result.date}">
-                        <a class="edit"><button class="btn btn-outline-success show-modalUpdate" data-toggle="modal" data-target="#UpdateModal">Update</button></a> &nbsp;
-                        <a th:href="@{/delete(taskId=${result.taskId})}"><button class="btn btn-outline-danger">Delete</button></a>
+                        <a class="edit"><button class="btn btn-sm btn-outline-success show-modalUpdate" data-toggle="modal" data-target="#UpdateModal">Update</button></a> &nbsp;
+                        <a th:href="@{/delete(taskId=${result.taskId})}"><button class="btn btn-sm btn-outline-danger">Delete</button></a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="container">
-        <button class="btn btn-success show-modal" data-toggle="modal" data-target="#AddModal">Create New</button>
-    </div>
-
     <!-- MODALS start here-->
     <!-- Add modal -->
 
@@ -228,4 +241,13 @@
     </script>
 
 </body>
+
+<div class="container mb-3 mt-3">
+    <footer class="bg-light text-center text-lg-start">
+        <div class="text-center p-3" style="background-color: rgba(255,255,255)">
+            © 2021 Copyright:
+            <a class="text-dark">Lemuel John A. Erispe</a>
+        </div>
+    </footer>
+</div>
 </html>
